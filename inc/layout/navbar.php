@@ -36,7 +36,7 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="profile.php">Hi, <?php echo ucfirst($_SESSION['username']); ?></a>
             <div class=" mr-1 dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="">Maintenance</a>
-              <a class="dropdown-item" href="">Profile</a>
+              <a class="dropdown-item" href="profile.php">Profile</a>
               <a class="dropdown-item" href="logout.php">Logout</a>
             </div>
           </li>
