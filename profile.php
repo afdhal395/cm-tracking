@@ -11,7 +11,7 @@ $user = new User;
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs" id="userTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link" href="#user" id="userinfo" data-toggle="tab">User Information</a>
+        <a class="nav-link active" href="#user" id="userinfo" data-toggle="tab">User Information</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#auth" id="userauth" data-toggle="tab">Authentication</a>
@@ -30,7 +30,7 @@ $user = new User;
               <label for="username">Username</label>
             </div>  
             <div class="col-sm-6">
-              <input type="text" name="username" id="" class="form-control" placeholder="" value="<?php echo $user->username();?>" disabled>
+              <input type="text" name="username" id=username class="form-control" placeholder="" value="<?php echo $user->username();?>" disabled>
             </div>
           </div>
           <div class="form-group row">
@@ -38,20 +38,21 @@ $user = new User;
               <label for="firstname">First Name</label>
             </div>  
             <div class="col-sm-6">
-              <input type="text" name="firstname" id="" class="form-control" placeholder="" value="<?php echo $user->firstname();?>" disabled>
+              <input type="text" name="firstname" id="firstname" class="form-control" placeholder="" value="<?php echo $user->firstname();?>" disabled>
             </div>
           </div>
           <div class="form-group row">
             <div class="col-sm-2">
               <label for="lastname">Last Name</label>
-            </div>  
+            </div>
             <div class="col-sm-6">
-              <input type="text" name="lastname" id="" class="form-control" placeholder="" value="<?php echo $user->lastname();?>" disabled>
+              <input type="text" name="lastname" id="lastname" class="form-control" placeholder="" value="<?php echo $user->lastname();?>" disabled>
             </div>
           </div>
             <div class="form-group-row">
               <div class="col">
-                <button type="submit" class="float-left btn btn-primary">Edit</button>
+                  <a href="#" onclick="editUserInfo()" class="float-left btn btn-primary" id="editUserInfoBtn" name="editUserInfoBtn">Edit</a>
+                  <a href="#" class="ml-3 float-left btn btn-success" name="submit" id="editUserInfoSubmitBtn" style="display: none">Submit</a>
               </div>
             </div>
         </form>
@@ -63,7 +64,7 @@ $user = new User;
               <label for="currentpassword">Current Password</label>
             </div>  
             <div class="col-sm-6">
-              <input type="password" name="currentpassword" id="" class="form-control" placeholder="" value="" disabled>
+              <input type="password" name="currentpassword" id="currentpassword" class="form-control" placeholder="" value="" disabled>
             </div>
           </div>
           <div class="form-group row">
@@ -71,7 +72,7 @@ $user = new User;
               <label for="newpassword">New Password</label>
             </div>  
             <div class="col-sm-6">
-              <input type="password" name="newpassword" id="" class="form-control" placeholder="" value="" disabled>
+              <input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="" value="" disabled>
             </div>
           </div>
           <div class="form-group row">
@@ -79,12 +80,13 @@ $user = new User;
               <label for="verifypassword">Verify Password</label>
             </div>  
             <div class="col-sm-6">
-              <input type="password" name="verifypassword" id="" class="form-control" placeholder="" value="" disabled>
+              <input type="password" name="verifypassword" id="verifypassword" class="form-control" placeholder="" value="" disabled>
             </div>
           </div>
             <div class="form-group-row">
               <div class="col">
-                <button type="submit" class="float-left btn btn-primary">Edit</button>
+              <a href="#" onclick="editPassword()" class="float-left btn btn-primary" id="editPasswordBtn" name="editPasswordBtn">Edit</a>
+              <a href="#" class="ml-3 float-left btn btn-success" name="submit" id="editPasswordSubmitBtn" style="display: none">Submit</a>
               </div>
             </div>
         </form>
@@ -103,6 +105,47 @@ $user = new User;
     </div>
   </div>
 </div>
+
+<script>
+function editUserInfo() {
+  var x = document.getElementById("username").disabled;
+  if (x == true) {
+    document.getElementById("username").disabled = false;
+    document.getElementById("firstname").disabled = false;
+    document.getElementById("lastname").disabled = false;
+    document.getElementById("editUserInfoSubmitBtn").style.display="block";
+    document.getElementById("editUserInfoBtn").innerHTML = "Cancel";
+    document.getElementById("editUserInfoBtn").className = "float-left btn btn-danger";
+
+  } else {
+    document.getElementById("username").disabled = true;
+    document.getElementById("firstname").disabled = true;
+    document.getElementById("lastname").disabled = true;
+    document.getElementById("editUserInfoSubmitBtn").style.display="none";
+    document.getElementById("editUserInfoBtn").innerHTML = "Edit";
+    document.getElementById("editUserInfoBtn").className = "float-left btn btn-primary";
+  }
+}
+
+function editPassword() {
+  var x = document.getElementById("currentpassword").disabled;
+  if (x == true) {
+    document.getElementById("currentpassword").disabled = false;
+    document.getElementById("newpassword").disabled = false;
+    document.getElementById("verifypassword").disabled = false;
+    document.getElementById("editPasswordSubmitBtn").style.display="block";
+    document.getElementById("editPasswordBtn").innerHTML = "Cancel";
+    document.getElementById("editPasswordBtn").className = "float-left btn btn-danger";
+  } else {
+    document.getElementById("currentpassword").disabled = true;
+    document.getElementById("newpassword").disabled = true;
+    document.getElementById("verifypassword").disabled = true;
+    document.getElementById("editPasswordSubmitBtn").style.display="none";
+    document.getElementById("editPasswordBtn").innerHTML = "Edit";
+    document.getElementById("editPasswordBtn").className = "float-left btn btn-primary";
+  }
+}
+</script>
 
 <?php
 include('inc/layout/footer.php');
