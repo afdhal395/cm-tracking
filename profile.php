@@ -3,6 +3,17 @@ include('config.php');
 include('inc/layout/header.php');
 include(CLASS_DIR.'/class.user.php');
 $user = new User;
+
+if (isset($_POST['editUserInfoSubmitBtn'])) {
+  $user->updateUserInfo($_POST);
+}
+
+/* not checking for element name editUserInfoSubmitBtn as the form is submitted by script.
+Refer: https://stackoverflow.com/questions/1709301/javascript-submit-does-not-include-submit-button-value
+*/
+if (isset($_POST['currentpassword'])) {
+  $user->updatePassword($_POST);
+}
 ?>
 
 <h3>Profile</h3>
@@ -24,11 +35,11 @@ $user = new User;
   <div class="card-body">
     <div class="tab-content">
       <div class="tab-pane fade show active" id="user" role="tabpanel">
-        <form action="" method="post">
+        <form action="" method="post" id="userInfoForm">
           <div class="form-group row">
             <div class="col-sm-2">
               <label for="username">Username</label>
-            </div>  
+            </div>
             <div class="col-sm-6">
               <input type="text" name="username" id=username class="form-control" placeholder="" value="<?php echo $user->username();?>" disabled>
             </div>
@@ -52,13 +63,13 @@ $user = new User;
             <div class="form-group-row">
               <div class="col">
                   <a href="#" onclick="editUserInfo()" class="float-left btn btn-primary" id="editUserInfoBtn" name="editUserInfoBtn">Edit</a>
-                  <a href="#" class="ml-3 float-left btn btn-success" name="submit" id="editUserInfoSubmitBtn" style="display: none">Submit</a>
+                  <input type="submit" class="ml-3 float-left btn btn-success" name="editUserInfoSubmitBtn" id="editUserInfoSubmitBtn" style="display: none" value="Update User Info">
               </div>
             </div>
         </form>
       </div>
       <div class="tab-pane fade" id="auth" role="tabpanel">
-      <form action="" method="post">
+      <form action="" method="post" id="userPasswordForm">
           <div class="form-group row">
             <div class="col-sm-3">
               <label for="currentpassword">Current Password</label>
@@ -86,7 +97,7 @@ $user = new User;
             <div class="form-group-row">
               <div class="col">
               <a href="#" onclick="editPassword()" class="float-left btn btn-primary" id="editPasswordBtn" name="editPasswordBtn">Edit</a>
-              <a href="#" class="ml-3 float-left btn btn-success" name="submit" id="editPasswordSubmitBtn" style="display: none">Submit</a>
+              <a href="#" onclick="updatePassword()" class="ml-3 float-left btn btn-success" name="editPasswordSubmitBtn" id="editPasswordSubmitBtn" style="display: none">Update Password</a>
               </div>
             </div>
         </form>
@@ -143,6 +154,22 @@ function editPassword() {
     document.getElementById("editPasswordSubmitBtn").style.display="none";
     document.getElementById("editPasswordBtn").innerHTML = "Edit";
     document.getElementById("editPasswordBtn").className = "float-left btn btn-primary";
+  }
+}
+
+function updatePassword() {
+  var currentpassword = document.forms["userPasswordForm"]["currentpassword"];
+  var newpassword = document.forms["userPasswordForm"]["newpassword"];
+  var verifypassword = document.forms["userPasswordForm"]["verifypassword"];
+  
+  if (currentpassword.value == "") {
+    window.alert("Current password is empty");
+    currentpassword.focus();
+  } else if (newpassword.value != verifypassword.value || newpassword.value == "" || verifypassword.value == "") {
+    window.alert("Password not same!");
+    verifypassword.focus();
+  } else {
+    document.forms["userPasswordForm"].submit();
   }
 }
 </script>
