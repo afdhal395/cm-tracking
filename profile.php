@@ -3,6 +3,7 @@ include('config.php');
 include('inc/layout/header.php');
 include(CLASS_DIR.'/class.user.php');
 $user = new User;
+$user->fetchUserInfo($_SESSION['userID']);
 
 if (isset($_POST['editUserInfoSubmitBtn'])) {
   $user->updateUserInfo($_POST);

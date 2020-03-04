@@ -10,13 +10,7 @@ class User
   private $lastname;
   private $roleName;
 
-  public function __construct()
-  {
-    $this->userID = $_SESSION['userID'];
-    $this->fetch_user_info($this->userID);
-  }
-
-  public function fetch_user_info($_userID) {
+  public function fetchUserInfo($_userID) {
     global $connection;
     $sql = "SELECT `user`.`username`, `user`.`userpassword`, `user`.`firstname`, `user`.`lastname`, `location`.`locationName`, `role`.`roleName` ";
     $sql .= "FROM `user` ";
