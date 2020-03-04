@@ -12,7 +12,7 @@ class User
 
   public function fetchUserInfo($_userID) {
     global $connection;
-    $sql = "SELECT `user`.`username`, `user`.`userpassword`, `user`.`firstname`, `user`.`lastname`, `location`.`locationName`, `role`.`roleName` ";
+    $sql = "SELECT `user`.`userID`, `user`.`username`, `user`.`userpassword`, `user`.`firstname`, `user`.`lastname`, `location`.`locationName`, `role`.`roleName` ";
     $sql .= "FROM `user` ";
     $sql .= "JOIN `location` ON `user`.`locationID` = `location`.`locationID` ";
     $sql .= "JOIN `role` ON `user`.`roleID` = `role`.`roleID` ";
@@ -23,9 +23,10 @@ class User
       $stmt->store_result();
       
       if ($stmt->num_rows == 1) {
-        $stmt->bind_result($username, $userpassword, $firstname, $lastname, $locationName, $roleName);
+        $stmt->bind_result($userID, $username, $userpassword, $firstname, $lastname, $locationName, $roleName);
         
         if ($stmt->fetch()) {
+          $this->userID = $userID;
           $this->username = $username;
           $this->userpassword = $userpassword;
           $this->firstname = $firstname;
