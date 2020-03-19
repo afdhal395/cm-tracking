@@ -107,7 +107,7 @@ class User
         if ($db_currentpassword !== $currentPassword) {
           $this->outputError("Current password incorrect.");
         } else {
-          $sql = "UPDATE `user`.`userpasword` SET `user`.`userpassword` = ? ";
+          $sql = "UPDATE `user` SET `user`.`userpassword` = ? ";
           $sql .= "WHERE `user`.`userID` = ?";
           unset($stmt); //uninitialize $stmt var as used multiple times in single function
           if ($stmt = $connection->prepare($sql)) {
