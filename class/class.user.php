@@ -84,6 +84,8 @@ class User
       
       if (!$stmt->execute()) {
         $this->outputError("Error: ".$stmt->errno);
+      } else {
+        $this->outputSuccess("User Information Updated.");
       }
     }
   }
@@ -115,6 +117,8 @@ class User
 
             if (!$stmt->execute()) {
               $this->outputError("Error: ".$stmt->errno);
+            } else {
+              $this->outputSuccess("Password Updated.");
             }
           } else {
             $this->outputError("Error: ".$connection->errno);
@@ -128,10 +132,37 @@ class User
 
   }
 
-  private function outputError($param) {
-    echo "<div class='alert alert-danger' role='alert'>";
-    echo "<strong>Operation failed. $param</strong>";
-    echo "</div>";
+  /* method @output($operationResult, $msg)
+   * param:
+   * $operationResult(string) : success, failed
+   * $msg(string) : message to be output to users
+  */
+
+  private function output($operationResult, $msg) {
+    switch ($operationResult) {
+      case 'success':
+        return "<div class='alert alert-success' role='alert'> 
+                <strong>$msg</strong>
+                </div>";
+        break;
+      
+      case 'failed':
+        return "<div class='alert alert-danger' role='alert'> 
+                <strong>Operation failed. $msg</strong>
+                </div>";
+
+      default:
+        return "Unknown Operation Result";
+        break;
+    }
+  }
+
+  private function outputError($msg) {
+    echo $this->output('failed', $msg);
+  }
+
+  private function outputSuccess($msg) {
+    echo $this->output('success', $msg);
   }
 }
 ?>
