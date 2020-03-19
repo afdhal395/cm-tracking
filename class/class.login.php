@@ -54,7 +54,7 @@
               $_SESSION['username'] = $username;
 
               //redirect to homepage
-              header("location: ../index.php");
+              header("location: index.php");
             } else {
               //set for error to appear below login form
               $password_err = "Username or password incorrect";
