@@ -22,7 +22,7 @@
     if (empty($username_err) && empty($password_err)) {
     
       //check username exist or not
-      $sql = "SELECT `user`.`userID`, `user`.`username`, `user`.`userpassword` FROM user WHERE username=?";
+      $sql = "SELECT `user`.`userID`, `user`.`username`, `user`.`userpassword`, `user`.`roleID` FROM user WHERE username=?";
 
       if ($stmt = $connection->prepare($sql)) {
         //bind parameter as string
@@ -38,7 +38,7 @@
         if ($stmt->num_rows == 1) {
           //bind each result column to variable
 
-          $stmt->bind_result($id, $username, $password);
+          $stmt->bind_result($id, $username, $password, $roleID);
           
           //fetch sql result
           if ($stmt->fetch()) {
@@ -52,6 +52,7 @@
               $_SESSION['loggedin'] = true;
               $_SESSION['userID'] = $id;
               $_SESSION['username'] = $username;
+              $_SESSION['roleID'] = $roleID;
 
               //redirect to homepage
               header("location: index.php");
